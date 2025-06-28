@@ -203,6 +203,11 @@
             opacity: 0;
         }
         
+        .animate-slide-left {
+            animation: slideLeft 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
@@ -215,6 +220,11 @@
         
         @keyframes slideRight {
             from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideLeft {
+            from { transform: translateX(50px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
         
@@ -452,6 +462,36 @@
         .roadmap-item:last-child::after {
             display: none;
         }
+        
+        /* 数据表格样式 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .data-table th {
+            background: rgba(212, 175, 55, 0.1);
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .data-table tr:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        /* 图表容器 */
+        .chart-container {
+            height: 300px;
+            width: 100%;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body class="ancient-pattern">
@@ -483,10 +523,12 @@
             </a>
             <div class="hidden md:flex space-x-8">
                 <a href="#project" class="hover:text-yellow-400 transition">项目介绍</a>
+                <a href="#background" class="hover:text-yellow-400 transition">项目背景</a>
                 <a href="#nft" class="hover:text-yellow-400 transition">NFT收藏</a>
                 <a href="#technology" class="hover:text-yellow-400 transition">AI技术</a>
+                <a href="#data" class="hover:text-yellow-400 transition">市场数据</a>
+                <a href="#market" class="hover:text-yellow-400 transition">市场分析</a>
                 <a href="#roadmap" class="hover:text-yellow-400 transition">发展路线</a>
-                <a href="#team" class="hover:text-yellow-400 transition">团队介绍</a>
             </div>
             <div class="flex items-center space-x-4">
                 <button class="btn-secondary px-6 py-2 rounded-full text-sm">
@@ -623,6 +665,142 @@
                     <p class="text-gray-300">
                         多语言制作，覆盖168个国家，推动中华文化全球传播
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 项目背景 -->
+    <section class="py-20" id="background">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">项目背景与愿景</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    利用前沿AI与区块链技术，为经典穿越武侠小说注入数字生命
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="animate-slide-right">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">项目愿景</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">
+                            我们致力于利用前沿的生成式AI与区块链技术，为拥有25年历史的经典穿越武侠小说《寻秦记》注入数字生命。
+                            通过打造世界首部完全由AI制作的穿越武侠电影，并构建精密的NFT生态系统，
+                            我们邀请全球用户共同参与并见证这一文化与科技融合的历史创举。
+                        </p>
+                        
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">项目使命</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-book text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-1">文化传承</h4>
+                                    <p class="text-gray-300 text-sm">
+                                        让经典武侠文学在数字时代焕发新生，通过AI技术跨越语言和文化障碍
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-microchip text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-1">技术创新</h4>
+                                    <p class="text-gray-300 text-sm">
+                                        开创AI电影制作的新范式，推动人工智能在艺术创作领域的应用
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-share-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-1">价值共享</h4>
+                                    <p class="text-gray-300 text-sm">
+                                        构建去中心化的文化IP生态系统，让每个参与者分享文化价值创造的收益
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-globe text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-1">全球影响</h4>
+                                    <p class="text-gray-300 text-sm">
+                                        向全世界展示中华文化的创新活力和时代精神
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-slide-left">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">核心创新点</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-robot text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-2">全球首创AI原生武侠电影</h4>
+                                    <p class="text-gray-300 text-sm">
+                                        开创AI原生电影制作模式，从剧本到后期全流程AI驱动
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-sync-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-2">经典IP与现代科技融合</h4>
+                                    <p class="text-gray-300 text-sm">
+                                        25年经典IP的数字化重生，完美还原秦朝历史场景
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-link text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-2">区块链保护的数字文化资产</h4>
+                                    <p class="text-gray-300 text-sm">
+                                        构建基于区块链的NFT生态系统，形成完整价值链条
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-ticket-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-2">创新的NFT观影机制</h4>
+                                    <p class="text-gray-300 text-sm">
+                                        代币门控观影系统，提供永久观看权和互动体验
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1046,6 +1224,306 @@
 
     <div class="section-divider"></div>
 
+    <!-- 市场数据部分 -->
+    <section class="py-20" id="data">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">市场数据</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    基于全球认知度和文化影响力，《寻秦记》IP具有巨大的商业价值
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                <div class="animate-slide-up">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">全球认知度数据统计</h3>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>地区</th>
+                                        <th>知识分子认知度</th>
+                                        <th>大众认知度</th>
+                                        <th>年度相关文化产品产值</th>
+                                        <th>潜在用户基数</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>中国大陆</td>
+                                        <td>78%</td>
+                                        <td>45%</td>
+                                        <td>5亿元人民币</td>
+                                        <td>2.5亿人</td>
+                                    </tr>
+                                    <tr>
+                                        <td>港澳台</td>
+                                        <td>95%</td>
+                                        <td>68%</td>
+                                        <td>5,000万新台币</td>
+                                        <td>1,500万人</td>
+                                    </tr>
+                                    <tr>
+                                        <td>日本</td>
+                                        <td>35%</td>
+                                        <td>15%</td>
+                                        <td>1.8亿日元</td>
+                                        <td>800万人</td>
+                                    </tr>
+                                    <tr>
+                                        <td>韩国</td>
+                                        <td>28%</td>
+                                        <td>12%</td>
+                                        <td>1.2亿韩元</td>
+                                        <td>600万人</td>
+                                    </tr>
+                                    <tr>
+                                        <td>美国</td>
+                                        <td>15%</td>
+                                        <td>3%</td>
+                                        <td>1,500万美元</td>
+                                        <td>200万人</td>
+                                    </tr>
+                                    <tr>
+                                        <td>欧洲</td>
+                                        <td>12%</td>
+                                        <td>2%</td>
+                                        <td>800万欧元</td>
+                                        <td>150万人</td>
+                                    </tr>
+                                    <tr>
+                                        <td>其他地区</td>
+                                        <td>8%</td>
+                                        <td>1%</td>
+                                        <td>300万美元</td>
+                                        <td>100万人</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">市场规模与增长预测</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-br from-yellow-400/10 to-red-500/10 p-6 rounded-lg">
+                                <h4 class="text-lg font-bold mb-4">全球NFT市场</h4>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <div class="text-2xl font-bold gradient-text">230亿美元</div>
+                                        <div class="text-sm text-gray-400">2023年市场规模</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold gradient-text">85%</div>
+                                        <div class="text-sm text-gray-400">年复合增长率</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-yellow-400/10 to-red-500/10 p-6 rounded-lg">
+                                <h4 class="text-lg font-bold mb-4">全球AI内容创作市场</h4>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <div class="text-2xl font-bold gradient-text">50亿美元</div>
+                                        <div class="text-sm text-gray-400">2023年市场规模</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold gradient-text">90%</div>
+                                        <div class="text-sm text-gray-400">年复合增长率</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-yellow-400/10 to-red-500/10 p-6 rounded-lg">
+                                <h4 class="text-lg font-bold mb-4">武侠文化IP海外市场</h4>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <div class="text-2xl font-bold gradient-text">120亿人民币</div>
+                                        <div class="text-sm text-gray-400">2023年市场规模</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold gradient-text">50%</div>
+                                        <div class="text-sm text-gray-400">年复合增长率</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 市场分析部分 -->
+    <section class="py-20" id="market">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">市场分析与商业价值</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    基于《寻秦记》的全球影响力，本项目具有巨大的市场潜力
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                <div class="animate-slide-right">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">目标市场分析</h3>
+                        
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="text-lg font-bold mb-3 text-yellow-400">一级市场（核心用户）</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-user-astronaut text-yellow-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong>武侠文学爱好者群体</strong>
+                                            <p class="text-gray-300 text-sm">全球规模800万人，年均文化消费8,000-25,000元</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-history text-yellow-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong>穿越题材爱好者</strong>
+                                            <p class="text-gray-300 text-sm">全球规模1,200万人，年增长率80%</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-coins text-yellow-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong>NFT收藏者与区块链用户</strong>
+                                            <p class="text-gray-300 text-sm">全球规模400万人，年增长率120%</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-bold mb-3 text-yellow-400">二级市场（潜在用户）</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-robot text-yellow-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong>AI技术与科技爱好者</strong>
+                                            <p class="text-gray-300 text-sm">全球规模2,500万人，年均科技产品消费4,000-20,000元</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-landmark text-yellow-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong>历史文化爱好者</strong>
+                                            <p class="text-gray-300 text-sm">全球规模3,000万人，年均文化娱乐消费3,000-12,000元</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-slide-left">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">商业模式创新</h3>
+                        
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="text-lg font-bold mb-3 text-yellow-400">一级市场收入</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex justify-between">
+                                        <span>NFT首次发行</span>
+                                        <span class="text-yellow-400 font-bold">4,898万元</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span>IP授权费用</span>
+                                        <span class="text-yellow-400 font-bold">1,500万元</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span>技术授权</span>
+                                        <span class="text-yellow-400 font-bold">800万元</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-bold mb-3 text-yellow-400">二级市场收入</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex justify-between">
+                                        <span>交易手续费(2.5%)</span>
+                                        <span class="text-yellow-400 font-bold">6,000万元/年</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span>版税收入(5%)</span>
+                                        <span class="text-yellow-400 font-bold">6,000万元/年</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-bold mb-3 text-yellow-400">生态扩展收入</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex justify-between">
+                                        <span>续集制作</span>
+                                        <span class="text-yellow-400 font-bold">1.5亿元</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span>衍生产品</span>
+                                        <span class="text-yellow-400 font-bold">8,000万元/年</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span>教育培训</span>
+                                        <span class="text-yellow-400 font-bold">1,500万元/年</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card p-8 animate-slide-up">
+                <h3 class="text-2xl font-bold mb-6 gradient-text text-center">竞争优势分析</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center p-4">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                            <i class="fas fa-flask text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">技术领先性</h4>
+                        <p class="text-gray-300 text-sm">全球首个AI原生武侠电影制作模式</p>
+                    </div>
+                    
+                    <div class="text-center p-4">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                            <i class="fas fa-book text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">文化价值</h4>
+                        <p class="text-gray-300 text-sm">25年经典IP，深厚文化底蕴</p>
+                    </div>
+                    
+                    <div class="text-center p-4">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                            <i class="fas fa-globe text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">全球化</h4>
+                        <p class="text-gray-300 text-sm">多语言制作，国际市场潜力巨大</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
     <!-- 发展路线图 -->
     <section class="py-20" id="roadmap">
         <div class="container mx-auto px-4">
@@ -1212,120 +1690,6 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- 团队介绍 -->
-    <section class="py-20" id="team">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16 animate-fade-in">
-                <h2 class="text-4xl font-bold mb-6">
-                    <span class="gradient-text">核心团队</span>
-                </h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    汇聚顶尖AI、区块链、文化产业专家，打造世界级的创新团队
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                <!-- 团队成员1 -->
-                <div class="card p-8 text-center animate-slide-up">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
-                        <i class="fas fa-user-tie text-3xl text-white"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Z.H</h3>
-                    <p class="text-yellow-400 mb-4">首席执行官</p>
-                    <div class="text-sm text-gray-300 space-y-1 mb-4">
-                        <p>• 北京大学计算机科学博士</p>
-                        <p>• 前腾讯AI Lab技术总监</p>
-                        <p>• 18年AI技术研发经验</p>
-                        <p>• 发表AI学术论文80+篇</p>
-                    </div>
-                    <div class="flex justify-center space-x-3">
-                        <a href="#" class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- 团队成员2 -->
-                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.1s;">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
-                        <i class="fas fa-code text-3xl text-white"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">L.F</h3>
-                    <p class="text-yellow-400 mb-4">首席技术官</p>
-                    <div class="text-sm text-gray-300 space-y-1 mb-4">
-                        <p>• MIT人工智能博士</p>
-                        <p>• 前Google DeepMind研究科学家</p>
-                        <p>• 区块链技术专家</p>
-                        <p>• 《Science》主刊发表论文15+篇</p>
-                    </div>
-                    <div class="flex justify-center space-x-3">
-                        <a href="#" class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- 团队成员3 -->
-                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.2s;">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
-                        <i class="fas fa-scroll text-3xl text-white"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">文学顾问团</h3>
-                    <p class="text-yellow-400 mb-4">文化专家</p>
-                    <div class="text-sm text-gray-300 space-y-1 mb-4">
-                        <p>• 香港中文大学教授</p>
-                        <p>• 黄易作品研究专家</p>
-                        <p>• 中科院考古研究所专家</p>
-                        <p>• 秦汉史权威学者</p>
-                    </div>
-                    <div class="flex justify-center space-x-3">
-                        <a href="#" class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
-                            <i class="fas fa-university"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm">
-                            <i class="fas fa-book"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 合作伙伴 -->
-            <div class="text-center mb-12">
-                <h3 class="text-2xl font-bold mb-8">战略合作伙伴</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div class="card p-6 text-center">
-                        <i class="fab fa-google text-4xl text-blue-400 mb-4"></i>
-                        <h4 class="font-bold">Google</h4>
-                        <p class="text-sm text-gray-400">AI技术支持</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <i class="fas fa-microchip text-4xl text-green-400 mb-4"></i>
-                        <h4 class="font-bold">NVIDIA</h4>
-                        <p class="text-sm text-gray-400">GPU算力支持</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <i class="fas fa-university text-4xl text-yellow-400 mb-4"></i>
-                        <h4 class="font-bold">故宫博物院</h4>
-                        <p class="text-sm text-gray-400">文化顾问</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <i class="fab fa-ethereum text-4xl text-purple-400 mb-4"></i>
-                        <h4 class="font-bold">OpenSea</h4>
-                        <p class="text-sm text-gray-400">NFT平台</p>
                     </div>
                 </div>
             </div>
@@ -1510,10 +1874,10 @@
                     <h3 class="text-lg font-semibold mb-4">项目信息</h3>
                     <ul class="space-y-2">
                         <li><a href="#project" class="text-gray-400 hover:text-yellow-400 transition">项目介绍</a></li>
+                        <li><a href="#background" class="text-gray-400 hover:text-yellow-400 transition">项目背景</a></li>
                         <li><a href="#nft" class="text-gray-400 hover:text-yellow-400 transition">NFT系列</a></li>
                         <li><a href="#technology" class="text-gray-400 hover:text-yellow-400 transition">AI技术</a></li>
-                        <li><a href="#roadmap" class="text-gray-400 hover:text-yellow-400 transition">发展路线</a></li>
-                        <li><a href="#team" class="text-gray-400 hover:text-yellow-400 transition">团队介绍</a></li>
+                        <li><a href="#data" class="text-gray-400 hover:text-yellow-400 transition">市场数据</a></li>
                     </ul>
                 </div>
                 <div>
