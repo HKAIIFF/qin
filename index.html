@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寻秦记 - AI原生电影项目</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Orbitron:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d4af37;     /* 金色 - 象征古代皇权 */
+            --secondary: #8b4513;   /* 古铜色 - 象征青铜器时代 */
+            --accent: #ff6b35;      /* 朱砂红 - 传统中国红 */
+            --dark: #2c1810;        /* 深棕色 - 古木色 */
+            --light: #f5f5dc;       /* 米色 - 古典纸张色 */
+            --tech: #00d4ff;        /* 科技蓝 - 现代科技感 */
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(139, 69, 19, 0.08) 0%, transparent 30%),
+                radial-gradient(circle at 40% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 25%);
+        }
+        
+        .logo-font {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--tech));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+            100% { text-shadow: 0 0 25px rgba(212, 175, 55, 0.6), 0 0 35px rgba(255, 107, 53, 0.4); }
+        }
+        
+        .logo-sub {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 500;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -8px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--tech));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .accent-bg {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .card {
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.8), rgba(26, 32, 44, 0.8));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+            border-color: rgba(255, 107, 53, 0.4);
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.95), rgba(10, 10, 10, 0.95));
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 107, 53, 0.1));
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+        
+        .hero:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.8) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(212, 175, 55, 0.1) 0%, 
+                rgba(139, 69, 19, 0.1) 25%, 
+                rgba(255, 107, 53, 0.1) 50%, 
+                rgba(0, 212, 255, 0.1) 75%, 
+                rgba(212, 175, 55, 0.1) 100%);
+            background-size: 400% 400%;
+            opacity: 0.4;
+            animation: bgPan 40s infinite linear;
+        }
+        
+        @keyframes bgPan {
+            0% { background-position: 0% 0%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        .animate-slide-right {
+            animation: slideRight 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideRight {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .ai-element {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.8), rgba(212, 175, 55, 0.1));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(5px);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            color: var(--primary);
+            z-index: 3;
+            pointer-events: none;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+        
+        .data-stream {
+            position: absolute;
+            height: 120px;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--primary), var(--accent), transparent);
+            z-index: 0;
+            animation: dataStream 3s linear infinite;
+            opacity: 0.4;
+        }
+        
+        @keyframes dataStream {
+            0% { transform: translateY(-120%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        .nft-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        
+        .nft-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+        }
+        
+        .nft-card-hover {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(44, 24, 16, 0.95), rgba(44, 24, 16, 0.7), transparent);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .nft-card:hover .nft-card-hover {
+            transform: translateY(0);
+        }
+        
+        .token-badge {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.6), rgba(26, 32, 44, 0.6));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.8), rgba(26, 32, 44, 0.8));
+        }
+        
+        .stats-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .stats-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--tech));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .nft-card:hover .project-img {
+            transform: scale(1.1);
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+            margin: 4rem 0;
+        }
+        
+        .ancient-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3Cpath d='M50 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .tech-border {
+            position: relative;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--tech));
+            border-radius: 16px;
+        }
+        
+        .tech-border-inner {
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.95), rgba(10, 10, 10, 0.95));
+            border-radius: 14px;
+            padding: 2rem;
+        }
+        
+        .input-field {
+            background: rgba(44, 24, 16, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: white;
+            border-radius: 8px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 特殊动画效果 */
+        .time-travel-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .time-travel-effect::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent 30%, var(--tech) 45%, var(--primary) 55%, transparent 70%);
+            background-size: 200% 200%;
+            animation: timeTravel 3s linear infinite;
+            z-index: -1;
+            border-radius: 20px;
+        }
+        
+        @keyframes timeTravel {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .logo-font {
+                font-size: 1.8rem;
+            }
+            
+            .hero {
+                min-height: 80vh;
+            }
+            
+            .ai-element {
+                display: none;
+            }
+        }
+        
+        /* 特色徽章样式 */
+        .feature-badge {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            display: inline-block;
+            margin: 4px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .roadmap-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+        }
+        
+        .roadmap-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: linear-gradient(to bottom, var(--primary), transparent);
+        }
+        
+        .roadmap-item:last-child::after {
+            display: none;
+        }
+    </style>
+</head>
+<body class="ancient-pattern">
+    <!-- AI 时空元素 -->
+    <div class="ai-element" style="top: 120px; left: 8%;">
+        项目状态: 开发中<br>
+        时空坐标: 秦朝-公元前221年<br>
+        // AI Film Generation Active
+    </div>
+    
+    <div class="ai-element" style="bottom: 150px; right: 10%;">
+        NFT总量: 158,000枚<br>
+        合约地址: 0x71A9B3...F7E<br>
+        // Blockchain Verified
+    </div>
+    
+    <!-- 数据流 -->
+    <div class="data-stream" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="data-stream" style="left: 35%; animation-delay: 1s;"></div>
+    <div class="data-stream" style="left: 55%; animation-delay: 0.5s;"></div>
+    <div class="data-stream" style="left: 75%; animation-delay: 1.5s;"></div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar fixed w-full z-50 px-4 py-3">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="flex flex-col items-center">
+                <div class="logo-font">寻秦记</div>
+                <div class="logo-sub">AI原生电影</div>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#project" class="hover:text-yellow-400 transition">项目介绍</a>
+                <a href="#nft" class="hover:text-yellow-400 transition">NFT收藏</a>
+                <a href="#technology" class="hover:text-yellow-400 transition">AI技术</a>
+                <a href="#roadmap" class="hover:text-yellow-400 transition">发展路线</a>
+                <a href="#team" class="hover:text-yellow-400 transition">团队介绍</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="btn-secondary px-6 py-2 rounded-full text-sm">
+                    <i class="fas fa-wallet mr-2"></i>连接钱包
+                </button>
+                <button class="btn-primary px-6 py-2 rounded-full text-sm">
+                    白皮书
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container mx-auto px-4 hero-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in">
+                    <div class="feature-badge mb-6">
+                        <i class="fas fa-crown mr-2"></i>全球首部AI原生武侠电影
+                    </div>
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                        <span class="gradient-text">寻秦记</span><br>
+                        <span class="text-3xl md:text-4xl">穿越时空的数字传奇</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        基于25年经典IP，运用前沿AI技术重新诠释项少龙的穿越之旅。
+                        通过区块链技术将古典武侠文学转化为数字资产，让每个参与者都能拥有这段传奇的一部分。
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 mb-12">
+                        <button class="btn-primary px-8 py-4 rounded-full font-medium text-lg">
+                            <i class="fas fa-play mr-2"></i>观看预告片
+                        </button>
+                        <button class="btn-secondary px-8 py-4 rounded-full font-medium text-lg">
+                            <i class="fas fa-gems mr-2"></i>探索NFT
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="stats-card">
+                            <i class="fas fa-film"></i>
+                            <div class="number">120</div>
+                            <div class="text-sm">分钟影片</div>
+                        </div>
+                        <div class="stats-card">
+                            <i class="fas fa-cubes"></i>
+                            <div class="number">158K</div>
+                            <div class="text-sm">NFT总量</div>
+                        </div>
+                        <div class="stats-card">
+                            <i class="fas fa-users"></i>
+                            <div class="number">25</div>
+                            <div class="text-sm">年经典IP</div>
+                        </div>
+                        <div class="stats-card">
+                            <i class="fas fa-globe"></i>
+                            <div class="number">168</div>
+                            <div class="text-sm">国家发行</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative animate-slide-right">
+                    <div class="time-travel-effect rounded-2xl p-1">
+                        <div class="w-full h-96 bg-gradient-to-br from-yellow-400/20 to-red-500/20 rounded-xl shadow-2xl flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-film text-6xl text-yellow-400 mb-4"></i>
+                                <h3 class="text-2xl font-bold gradient-text">《寻秦记》预告片</h3>
+                                <p class="text-gray-300 mt-2">120分钟AI原生电影</p>
+                                <button class="btn-primary px-6 py-3 rounded-full mt-4">
+                                    <i class="fas fa-play mr-2"></i>观看预告
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-6 -right-6 bg-gradient-to-br from-yellow-400 to-red-500 text-white p-4 rounded-xl transform rotate-12 shadow-lg">
+                        <div class="text-sm font-medium">全球首创</div>
+                        <div class="text-2xl font-bold">AI武侠</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目介绍 -->
+    <section class="py-20" id="project">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">项目核心价值</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    将25年经典穿越武侠小说《寻秦记》通过AI技术完整制作成120分钟电影，
+                    构建基于区块链的NFT生态系统，开创数字文化传承新模式。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="card p-8 text-center animate-slide-up">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-robot text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">AI原生制作</h3>
+                    <p class="text-gray-300">
+                        全流程AI技术驱动，从角色塑造到场景构建，突破传统电影制作限制
+                    </p>
+                </div>
+                
+                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-scroll text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">经典IP重生</h3>
+                    <p class="text-gray-300">
+                        基于黄易经典作品，完美还原秦朝历史场景与人物关系
+                    </p>
+                </div>
+                
+                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-coins text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">NFT生态系统</h3>
+                    <p class="text-gray-300">
+                        五层级NFT架构，从观影权到版权分享，构建完整价值链条
+                    </p>
+                </div>
+                
+                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.3s;">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-globe-asia text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">全球化发行</h3>
+                    <p class="text-gray-300">
+                        多语言制作，覆盖168个国家，推动中华文化全球传播
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- NFT收藏系列 -->
+    <section class="py-20" id="nft">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">NFT收藏系列</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    五层级NFT生态系统，从项少龙到历史神器，每个NFT都承载着独特的故事与价值
+                </p>
+            </div>
+            
+            <!-- NFT层级展示 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                <!-- 项少龙NFT -->
+                <div class="tech-border animate-slide-up">
+                    <div class="tech-border-inner">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                                <i class="fas fa-crown text-3xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold gradient-text">项少龙NFT</h3>
+                            <p class="text-sm text-gray-400 mt-2">创始赞助人层级</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span>发行数量:</span>
+                                <span class="text-yellow-400 font-bold">600枚</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>价格:</span>
+                                <span class="text-yellow-400 font-bold">12,999元</span>
+                            </div>
+                            <div class="border-t border-gray-600 pt-4">
+                                <h4 class="font-bold mb-2">核心权益:</h4>
+                                <ul class="text-sm space-y-1 text-gray-300">
+                                    <li>• DAO核心投票权</li>
+                                    <li>• 商业使用授权</li>
+                                    <li>• 电影署名权</li>
+                                    <li>• 独家观影体验</li>
+                                    <li>• 个性化定制</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 历史神器NFT -->
+                <div class="tech-border animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="tech-border-inner">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                                <i class="fas fa-gem text-3xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold gradient-text">历史神器</h3>
+                            <p class="text-sm text-gray-400 mt-2">第二层级系列</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span>发行数量:</span>
+                                <span class="text-yellow-400 font-bold">48,000枚</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>价格区间:</span>
+                                <span class="text-yellow-400 font-bold">299-1,299元</span>
+                            </div>
+                            <div class="border-t border-gray-600 pt-4">
+                                <h4 class="font-bold mb-2">包含物品:</h4>
+                                <ul class="text-sm space-y-1 text-gray-300">
+                                    <li>• 和氏璧</li>
+                                    <li>• 秦王剑</li>
+                                    <li>• 时空穿梭器</li>
+                                    <li>• 赵雅的香囊</li>
+                                    <li>• 乌廷芳的医书</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 秦龙NFT -->
+                <div class="tech-border animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="tech-border-inner">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                                <i class="fas fa-dragon text-3xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold gradient-text">秦龙NFT</h3>
+                            <p class="text-sm text-gray-400 mt-2">合成系列</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span>理论上限:</span>
+                                <span class="text-yellow-400 font-bold">25,000枚</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>获得方式:</span>
+                                <span class="text-yellow-400 font-bold">NFT合成</span>
+                            </div>
+                            <div class="border-t border-gray-600 pt-4">
+                                <h4 class="font-bold mb-2">特殊价值:</h4>
+                                <ul class="text-sm space-y-1 text-gray-300">
+                                    <li>• 独一无二短片</li>
+                                    <li>• 通缩机制</li>
+                                    <li>• 升级权益</li>
+                                    <li>• 史诗收藏价值</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NFT展示画廊 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-center">精选NFT展示</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- NFT 1 -->
+                    <div class="nft-card card rounded-xl overflow-hidden">
+                        <div class="relative">
+                            <div class="w-full h-64 bg-gradient-to-br from-yellow-400/30 to-red-500/30 flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-crown text-4xl text-yellow-400 mb-2"></i>
+                                    <h4 class="text-lg font-bold">项少龙</h4>
+                                    <p class="text-sm text-gray-300">穿越英雄</p>
+                                </div>
+                            </div>
+                            <div class="absolute top-3 left-3">
+                                <span class="token-badge">角色设计</span>
+                            </div>
+                            <div class="nft-card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-bold text-white">项少龙</h3>
+                                    <span class="text-sm font-medium text-gray-300">1 of 600</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 mr-2"></div>
+                                        <span class="text-sm text-gray-300">穿越英雄</span>
+                                    </div>
+                                    <button class="btn-primary px-3 py-1 rounded-lg text-xs">
+                                        查看详情
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold">项少龙</h3>
+                                <div class="text-sm font-medium text-yellow-400">12,999元</div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="text-xs text-gray-400">固定价格</div>
+                                <div class="text-xs text-green-400">创始赞助人</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFT 2 -->
+                    <div class="nft-card card rounded-xl overflow-hidden">
+                        <div class="relative">
+                            <div class="w-full h-64 bg-gradient-to-br from-green-400/30 to-blue-500/30 flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-gem text-4xl text-green-400 mb-2"></i>
+                                    <h4 class="text-lg font-bold">和氏璧</h4>
+                                    <p class="text-sm text-gray-300">传国玉璧</p>
+                                </div>
+                            </div>
+                            <div class="absolute top-3 left-3">
+                                <span class="token-badge">历史神器</span>
+                            </div>
+                            <div class="nft-card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-bold text-white">和氏璧</h3>
+                                    <span class="text-sm font-medium text-gray-300">1 of 2,000</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 mr-2"></div>
+                                        <span class="text-sm text-gray-300">传国玉璧</span>
+                                    </div>
+                                    <button class="btn-primary px-3 py-1 rounded-lg text-xs">
+                                        查看详情
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold">和氏璧</h3>
+                                <div class="text-sm font-medium text-yellow-400">1,299元</div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="text-xs text-gray-400">当前出价</div>
+                                <div class="text-xs text-red-400">3天2小时后结束</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFT 3 -->
+                    <div class="nft-card card rounded-xl overflow-hidden">
+                        <div class="relative">
+                            <div class="w-full h-64 bg-gradient-to-br from-pink-400/30 to-purple-500/30 flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-heart text-4xl text-pink-400 mb-2"></i>
+                                    <h4 class="text-lg font-bold">赵雅</h4>
+                                    <p class="text-sm text-gray-300">纯真爱情</p>
+                                </div>
+                            </div>
+                            <div class="absolute top-3 left-3">
+                                <span class="token-badge">人物群像</span>
+                            </div>
+                            <div class="nft-card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-bold text-white">赵雅</h3>
+                                    <span class="text-sm font-medium text-gray-300">3 of 3,000</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 mr-2"></div>
+                                        <span class="text-sm text-gray-300">纯真爱情</span>
+                                    </div>
+                                    <button class="btn-primary px-3 py-1 rounded-lg text-xs">
+                                        查看详情
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold">赵雅</h3>
+                                <div class="text-sm font-medium text-yellow-400">999元</div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="text-xs text-gray-400">固定价格</div>
+                                <div class="text-xs text-gray-400">刚刚上架</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFT 4 -->
+                    <div class="nft-card card rounded-xl overflow-hidden">
+                        <div class="relative">
+                            <div class="w-full h-64 bg-gradient-to-br from-blue-400/30 to-cyan-500/30 flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-key text-4xl text-blue-400 mb-2"></i>
+                                    <h4 class="text-lg font-bold">观影密钥</h4>
+                                    <p class="text-sm text-gray-300">电影通行证</p>
+                                </div>
+                            </div>
+                            <div class="absolute top-3 left-3">
+                                <span class="token-badge">观影密钥</span>
+                            </div>
+                            <div class="nft-card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-bold text-white">观影密钥</h3>
+                                    <span class="text-sm font-medium text-gray-300">888 of 50,000</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 mr-2"></div>
+                                        <span class="text-sm text-gray-300">电影通行证</span>
+                                    </div>
+                                    <button class="btn-primary px-3 py-1 rounded-lg text-xs">
+                                        立即购买
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold">观影密钥</h3>
+                                <div class="text-sm font-medium text-yellow-400">88元</div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="text-xs text-gray-400">120分钟观影权</div>
+                                <div class="text-xs text-green-400">大众层级</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- AI技术展示 -->
+    <section class="py-20" id="technology">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">AI原生电影技术</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    运用最前沿的AI技术栈，从视觉生成到语音合成，全流程AI驱动的电影制作革命
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="animate-slide-right">
+                    <div class="tech-border">
+                        <div class="tech-border-inner">
+                            <h3 class="text-2xl font-bold mb-6">
+                                <span class="gradient-text">技术架构</span>
+                            </h3>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                        <i class="fas fa-eye text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-bold mb-2">视觉生成模块</h4>
+                                        <p class="text-gray-300 text-sm mb-2">
+                                            基于Stable Diffusion XL训练的秦朝人物模型，专门优化的历史场景生成系统
+                                        </p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="feature-badge">Stable Diffusion XL</span>
+                                            <span class="feature-badge">Midjourney V6</span>
+                                            <span class="feature-badge">DALL-E 3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                        <i class="fas fa-video text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-bold mb-2">动画制作模块</h4>
+                                        <p class="text-gray-300 text-sm mb-2">
+                                            Runway ML驱动的角色动作生成，D-ID技术实现精确的对话口型匹配
+                                        </p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="feature-badge">Runway ML Gen-2</span>
+                                            <span class="feature-badge">Pika Labs</span>
+                                            <span class="feature-badge">D-ID</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                        <i class="fas fa-microphone text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-bold mb-2">语音与音频</h4>
+                                        <p class="text-gray-300 text-sm mb-2">
+                                            ElevenLabs多语言配音生成，AIVA智能作曲系统，古典乐器音效合成
+                                        </p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="feature-badge">ElevenLabs</span>
+                                            <span class="feature-badge">Murf AI</span>
+                                            <span class="feature-badge">AIVA</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-slide-left">
+                    <div class="w-full h-96 bg-gradient-to-br from-yellow-400/20 to-red-500/20 rounded-xl shadow-2xl flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-cogs text-6xl text-yellow-400 mb-4"></i>
+                            <h3 class="text-2xl font-bold gradient-text">AI技术架构</h3>
+                            <p class="text-gray-300 mt-2">多模态AI融合技术</p>
+                            <div class="mt-4 flex justify-center space-x-4">
+                                <span class="feature-badge">视觉生成</span>
+                                <span class="feature-badge">语音合成</span>
+                                <span class="feature-badge">动画制作</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技术优势 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-8 text-center animate-slide-up">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-infinity text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">创意无限性</h3>
+                    <p class="text-gray-300">
+                        突破物理限制，完美还原秦朝历史场景，创造理想化的角色形象
+                    </p>
+                </div>
+                
+                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">成本效率优势</h3>
+                    <p class="text-gray-300">
+                        制作成本降低90%，制作周期压缩70%，24小时不间断生产
+                    </p>
+                </div>
+                
+                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-globe text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">多语言全球化</h3>
+                    <p class="text-gray-300">
+                        同步多语言制作，文化本土化适配，个性化观影体验
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 发展路线图 -->
+    <section class="py-20" id="roadmap">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">发展路线图</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    从项目启动到全球生态成熟，见证AI原生电影产业的发展历程
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- 2025年第四季度 -->
+                <div class="roadmap-item animate-slide-up">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold gradient-text">第一阶段：基础建设期</h3>
+                            <div class="feature-badge">2025年10月-12月</div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">10月 - 项目启动</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 核心团队组建完成</li>
+                                    <li>• AI模型训练开始</li>
+                                    <li>• 社区建设启动</li>
+                                    <li>• Discord成员：15,000人</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">11月 - 技术开发</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 智能合约开发完成</li>
+                                    <li>• AI电影制作30%完成</li>
+                                    <li>• NFT生成系统测试</li>
+                                    <li>• 安全审计第一轮</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">12月 - 预售准备</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 营销活动全面展开</li>
+                                    <li>• 交易平台对接完成</li>
+                                    <li>• 法律合规检查完成</li>
+                                    <li>• 预售注册：150,000人</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2026年第一季度 -->
+                <div class="roadmap-item animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold gradient-text">第二阶段：发行期</h3>
+                            <div class="feature-badge">2026年1月-3月</div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">1月 - NFT发行</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 项少龙NFT限量发售</li>
+                                    <li>• Foundation平台拍卖</li>
+                                    <li>• 历史神器系列发售</li>
+                                    <li>• 售罄时间：<12小时</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">2月 - 功能激活</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 秦龙合成系统上线</li>
+                                    <li>• DAO治理系统启动</li>
+                                    <li>• AI互动功能开放</li>
+                                    <li>• 日活跃用户：8,000人</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">3月 - 电影首映</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• AI电影制作完成</li>
+                                    <li>• NFT持有者专属首映</li>
+                                    <li>• 全球媒体发布会</li>
+                                    <li>• 首映参与：80,000人</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2026年全年 -->
+                <div class="roadmap-item animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold gradient-text">第三阶段：生态扩展期</h3>
+                            <div class="feature-badge">2026年4月-12月</div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">全球推广</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 多语言版本发布（6种）</li>
+                                    <li>• 国际电影节参展（30个）</li>
+                                    <li>• 全球用户：300,000人</li>
+                                    <li>• 文化本土化：8个地区</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">功能升级</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• VR观影体验上线</li>
+                                    <li>• 元宇宙平台集成（5个）</li>
+                                    <li>• 教育应用开发</li>
+                                    <li>• 续集项目启动</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 长期规划 -->
+                <div class="roadmap-item animate-slide-up" style="animation-delay: 0.3s;">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold gradient-text">长期发展规划</h3>
+                            <div class="feature-badge">2027年-2030年</div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">2027年</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• AI技术升级</li>
+                                    <li>• 覆盖60个国家</li>
+                                    <li>• 150万用户</li>
+                                    <li>• 生态价值15亿元</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">2028年</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 元宇宙深度整合</li>
+                                    <li>• 覆盖120个国家</li>
+                                    <li>• 500万用户</li>
+                                    <li>• 生态价值50亿元</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">2029年</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 全球生态成熟</li>
+                                    <li>• 覆盖160个国家</li>
+                                    <li>• 800万用户</li>
+                                    <li>• 生态价值80亿元</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2 text-yellow-400">2030年</h4>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• 行业领导地位</li>
+                                    <li>• 全球覆盖</li>
+                                    <li>• 1,500万用户</li>
+                                    <li>• 生态价值150亿元</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 团队介绍 -->
+    <section class="py-20" id="team">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">核心团队</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    汇聚顶尖AI、区块链、文化产业专家，打造世界级的创新团队
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <!-- 团队成员1 -->
+                <div class="card p-8 text-center animate-slide-up">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Z.H</h3>
+                    <p class="text-yellow-400 mb-4">首席执行官</p>
+                    <div class="text-sm text-gray-300 space-y-1 mb-4">
+                        <p>• 北京大学计算机科学博士</p>
+                        <p>• 前腾讯AI Lab技术总监</p>
+                        <p>• 18年AI技术研发经验</p>
+                        <p>• 发表AI学术论文80+篇</p>
+                    </div>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 团队成员2 -->
+                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-code text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">L.F</h3>
+                    <p class="text-yellow-400 mb-4">首席技术官</p>
+                    <div class="text-sm text-gray-300 space-y-1 mb-4">
+                        <p>• MIT人工智能博士</p>
+                        <p>• 前Google DeepMind研究科学家</p>
+                        <p>• 区块链技术专家</p>
+                        <p>• 《Science》主刊发表论文15+篇</p>
+                    </div>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 团队成员3 -->
+                <div class="card p-8 text-center animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-scroll text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">文学顾问团</h3>
+                    <p class="text-yellow-400 mb-4">文化专家</p>
+                    <div class="text-sm text-gray-300 space-y-1 mb-4">
+                        <p>• 香港中文大学教授</p>
+                        <p>• 黄易作品研究专家</p>
+                        <p>• 中科院考古研究所专家</p>
+                        <p>• 秦汉史权威学者</p>
+                    </div>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
+                            <i class="fas fa-university"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm">
+                            <i class="fas fa-book"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 合作伙伴 -->
+            <div class="text-center mb-12">
+                <h3 class="text-2xl font-bold mb-8">战略合作伙伴</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="card p-6 text-center">
+                        <i class="fab fa-google text-4xl text-blue-400 mb-4"></i>
+                        <h4 class="font-bold">Google</h4>
+                        <p class="text-sm text-gray-400">AI技术支持</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <i class="fas fa-microchip text-4xl text-green-400 mb-4"></i>
+                        <h4 class="font-bold">NVIDIA</h4>
+                        <p class="text-sm text-gray-400">GPU算力支持</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <i class="fas fa-university text-4xl text-yellow-400 mb-4"></i>
+                        <h4 class="font-bold">故宫博物院</h4>
+                        <p class="text-sm text-gray-400">文化顾问</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <i class="fab fa-ethereum text-4xl text-purple-400 mb-4"></i>
+                        <h4 class="font-bold">OpenSea</h4>
+                        <p class="text-sm text-gray-400">NFT平台</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 投资信息 -->
+    <section class="py-20 bg-gradient-to-br from-yellow-900/20 to-red-900/20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">投资价值</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    多重价值支撑，稀缺性与实用性并重，开创数字文化投资新模式
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-slide-right">
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-gem text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">稀缺性价值</h3>
+                                <p class="text-gray-300">
+                                    全球首部AI原生武侠电影的历史地位，限量发行158,000枚NFT，供需比例1:51
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-tools text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">实用性价值</h3>
+                                <p class="text-gray-300">
+                                    NFT提供永久观影权、DAO投票权、角色互动功能等丰富的实用价值
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-chart-line text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">升值潜力</h3>
+                                <p class="text-gray-300">
+                                    通缩机制设计，预期传说级NFT增值8-15倍，基于稀缺性和需求增长
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-users text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">社群价值</h3>
+                                <p class="text-gray-300">
+                                    高质量文化爱好者社区准入权，DAO治理参与，收益分配机制
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-slide-left">
+                    <div class="tech-border">
+                        <div class="tech-border-inner text-center">
+                            <h3 class="text-2xl font-bold mb-6 gradient-text">代币经济模型</h3>
+                            
+                            <div class="grid grid-cols-2 gap-6 mb-8">
+                                <div class="bg-gradient-to-br from-yellow-400/20 to-red-500/20 p-6 rounded-lg">
+                                    <div class="text-3xl font-bold gradient-text mb-2">4,898万元</div>
+                                    <div class="text-sm text-gray-300">NFT发行收入</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-yellow-400/20 to-red-500/20 p-6 rounded-lg">
+                                    <div class="text-3xl font-bold gradient-text mb-2">1.34亿元</div>
+                                    <div class="text-sm text-gray-300">总收入预期</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-yellow-400/20 to-red-500/20 p-6 rounded-lg">
+                                    <div class="text-3xl font-bold gradient-text mb-2">58%</div>
+                                    <div class="text-sm text-gray-300">投资回报率</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-yellow-400/20 to-red-500/20 p-6 rounded-lg">
+                                    <div class="text-3xl font-bold gradient-text mb-2">11.5%</div>
+                                    <div class="text-sm text-gray-300">通缩减产率</div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <span>项少龙NFT权重</span>
+                                    <span class="text-yellow-400 font-bold">45%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>秦龙NFT权重</span>
+                                    <span class="text-yellow-400 font-bold">30%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>人物群像NFT权重</span>
+                                    <span class="text-yellow-400 font-bold">15%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>历史神器NFT权重</span>
+                                    <span class="text-yellow-400 font-bold">8%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>观影密钥NFT权重</span>
+                                    <span class="text-yellow-400 font-bold">2%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 订阅通讯 -->
+    <section class="py-16 bg-gradient-to-r from-yellow-900/30 to-red-900/30">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    <span class="gradient-text">加入寻秦记社区</span>
+                </h2>
+                <p class="text-xl text-gray-200 mb-8">
+                    订阅我们的通讯，获取项目最新进展、NFT发售信息和独家内容
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto mb-8">
+                    <input type="email" placeholder="输入您的邮箱地址" class="input-field rounded-full px-6 py-3 w-full">
+                    <button class="btn-primary px-8 py-3 rounded-full font-medium whitespace-nowrap">
+                        <i class="fas fa-paper-plane mr-2"></i>立即订阅
+                    </button>
+                </div>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center text-white text-lg hover:scale-110 transition-transform">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center text-white text-lg hover:scale-110 transition-transform">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center text-white text-lg hover:scale-110 transition-transform">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-red-500 flex items-center justify-center text-white text-lg hover:scale-110 transition-transform">
+                        <i class="fab fa-weibo"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-12 bg-gradient-to-br from-gray-900 to-black">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex flex-col items-start mb-4">
+                        <div class="logo-font text-2xl">寻秦记</div>
+                        <div class="logo-sub">AI原生电影</div>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        通过AI技术与区块链创新，重新诠释经典武侠文学，开创数字文化传承新时代。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">项目信息</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#project" class="text-gray-400 hover:text-yellow-400 transition">项目介绍</a></li>
+                        <li><a href="#nft" class="text-gray-400 hover:text-yellow-400 transition">NFT系列</a></li>
+                        <li><a href="#technology" class="text-gray-400 hover:text-yellow-400 transition">AI技术</a></li>
+                        <li><a href="#roadmap" class="text-gray-400 hover:text-yellow-400 transition">发展路线</a></li>
+                        <li><a href="#team" class="text-gray-400 hover:text-yellow-400 transition">团队介绍</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">资源文档</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">项目白皮书</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">技术文档</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">代币经济学</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">开发者指南</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">帮助支持</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">法律信息</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">服务条款</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">隐私政策</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">版权政策</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">风险声明</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">联系我们</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2025 寻秦记AI原生电影项目. 保留所有权利.</p>
+                <p class="mt-2">本项目为高风险投资，请仔细阅读风险声明后理性投资</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 数据流生成
+        function createDataStreams() {
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const stream = document.createElement('div');
+                    stream.className = 'data-stream';
+                    stream.style.left = Math.random() * 100 + '%';
+                    stream.style.animationDelay = Math.random() * 3 + 's';
+                    document.body.appendChild(stream);
+                    
+                    setTimeout(() => {
+                        stream.remove();
+                    }, 6000);
+                }, i * 2000);
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 启动数据流
+            createDataStreams();
+            setInterval(createDataStreams, 12000);
+            
+            // 滚动动画观察器
+            const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-right, .animate-slide-left');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        if (entry.target.classList.contains('animate-slide-up')) {
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                        if (entry.target.classList.contains('animate-slide-right')) {
+                            entry.target.style.transform = 'translateX(0)';
+                        }
+                        if (entry.target.classList.contains('animate-slide-left')) {
+                            entry.target.style.transform = 'translateX(0)';
+                        }
+                        if (entry.target.classList.contains('animate-fade-in')) {
+                            entry.target.style.transform = 'scale(1)';
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transition = 'all 0.8s ease';
+                if (el.classList.contains('animate-slide-up')) {
+                    el.style.transform = 'translateY(50px)';
+                }
+                if (el.classList.contains('animate-slide-right')) {
+                    el.style.transform = 'translateX(-50px)';
+                }
+                if (el.classList.contains('animate-slide-left')) {
+                    el.style.transform = 'translateX(50px)';
+                }
+                if (el.classList.contains('animate-fade-in')) {
+                    el.style.transform = 'scale(0.95)';
+                }
+                observer.observe(el);
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // 导航栏滚动效果
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 100) {
+                    navbar.style.background = 'linear-gradient(135deg, rgba(44, 24, 16, 0.98), rgba(10, 10, 10, 0.98))';
+                } else {
+                    navbar.style.background = 'linear-gradient(135deg, rgba(44, 24, 16, 0.95), rgba(10, 10, 10, 0.95))';
+                }
+            });
+            
+            // NFT卡片悬停效果
+            document.querySelectorAll('.nft-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // 按钮点击效果
+            document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('div');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.pointerEvents = 'none';
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+        
+        // 涟漪动画CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
